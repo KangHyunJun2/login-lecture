@@ -2,7 +2,7 @@
 
 const id = document.querySelector("#id"),
 psword = document.querySelector("#psword"),
-loginBtn = document.querySelector("button");
+loginBtn = document.querySelector("#button");
 
 loginBtn.addEventListener("click", login);
 
@@ -13,10 +13,21 @@ function login() {
     };
 
     fetch("/login", {
-        method: 'POST',
+        method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringLfy(req),
+        body: JSON.stringify(req),
+    })
+    .then((res) => res.json())
+    .then((res) => {
+        if (res.success) {
+            location.href = "/";
+        } else {
+            alert(res.msg);
+        }
+    })
+    .catch((err) => {
+        console.error("로그인 중 에러 발생");
     })
 }
